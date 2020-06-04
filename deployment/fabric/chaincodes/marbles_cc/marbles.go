@@ -112,6 +112,7 @@ type Scheme	struct{//解决方案
 	SchemeID		string		`json:"schemeid"`
 	SchemeTitle		string		`json:"schemetitle"`
 	KeyWord			string		`json:"keyword"`
+	Application     string      `json:"application"`
 	Period			string		`json:"period"`
 	Supplier		string		`json:"supplier"`
 	Budget			string		`json:"budget"`	

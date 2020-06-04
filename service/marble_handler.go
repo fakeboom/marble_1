@@ -253,7 +253,7 @@ func dosignup(marble interface{} , Type string, Id string) (resp api.Response, e
 		"change",
 		id,
 	}
-	typ := reflect.TypeOf(marble)
+	typ := reflect.TypeOf(marble).Elem()
 	rVal := reflect.ValueOf(marble).Elem()
 	for  i := 1 ;i< rVal.NumField(); i++{
 		tagVal := typ.Field(i).Tag.Get("json")
@@ -561,6 +561,12 @@ func read_allmarble(w http.ResponseWriter, r *http.Request){
 			res.Patents = append(res.Patents,value);
 		}
 	}
+	for _,value := range er.Papers{
+		if(value.OwnerId == id){
+			res.Papers = append(res.Papers,value);
+		}
+	}
+
 	for _,value := range er.Transfers{
 		if(value.OwnerId == id){
 			res.Transfers = append(res.Transfers,value);
@@ -568,7 +574,7 @@ func read_allmarble(w http.ResponseWriter, r *http.Request){
 			res.ToTransfers = append(res.ToTransfers,value)
 		}
 	}
-	writeJSONResponse(w, http.StatusOK, er)
+	writeJSONResponse(w, http.StatusOK, res)
 }
 func change_pwd(w http.ResponseWriter, r *http.Request){
 	type Sign struct{
@@ -652,7 +658,7 @@ func dochange_pwd(marble interface{} , Type string, Id string,NewPwd string) (re
 		"change",
 		id,
 	}
-	typ := reflect.TypeOf(marble)
+	typ := reflect.TypeOf(marble).Elem()
 	rVal := reflect.ValueOf(marble).Elem()
 	for  i := 1 ;i< rVal.NumField(); i++{
 		tagVal := typ.Field(i).Tag.Get("json")
